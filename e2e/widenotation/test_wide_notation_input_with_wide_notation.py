@@ -11,7 +11,7 @@ options.device_name = 'Pixel_3a_API_34_extension_level_7_x86_64'
 options.app = 'D:/STV/HushKeyboard/app/build/outputs/apk/debug/app-debug.apk'
 appium_server_url = 'http://127.0.0.1:4723/wd/hub'
 
-class TestAppium(unittest.TestCase):
+class TestWideNotationInputWithWideNotation(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Remote(appium_server_url, options=options)
         self.driver.implicitly_wait(15)
@@ -27,9 +27,9 @@ class TestAppium(unittest.TestCase):
 
         self.switch_hush_keyboard_to_input_keyboard()
 
-        self.using_w_rw()
+        self.toggle_wide_notation_setting()
 
-        self.enter_r_u_f_l_d_b_in_sequence()
+        self.enter_R_U_F_L_D_B_in_sequence()
 
     def disable_hush_keyboard(self):
         self.driver.find_element(by=AppiumBy.XPATH, value='//*[@text="Enable keyboard"]').click()
@@ -51,20 +51,16 @@ class TestAppium(unittest.TestCase):
         self.driver.find_element(by=AppiumBy.XPATH, value='//*[@resource-id="android:id/text1" and @text="Hush '
                                                                'Keyboard"]/parent::*').click()
     
-    def using_w_rw(self):
+    def toggle_wide_notation_setting(self):
         self.driver.find_element(by=AppiumBy.XPATH, value='//*[@content-desc="Settings"]').click()
-        time.sleep(2)
-        self.driver.tap([(950, 470)])
-        time.sleep(1)
-        self.driver.tap([(840, 700)])
-        # check if wide notation is using lowercase
-        wideNotation = self.driver.find_element(by=AppiumBy.XPATH,
+        # check if wide notation is using Rw
+        wide_notation  = self.driver.find_element(by=AppiumBy.XPATH,
                                       value='//*[@text="Wide notation"]/preceding-sibling::*['
-                                            '@text="Use lowercase (r)"]')
-        self.assertEqual(wideNotation.get_attribute('text'), 'Use lowercase (r)')
+                                            '@text="Use w (Rw)"]')
+        self.assertEqual(wide_notation .get_attribute('text'), 'Use w (Rw)')
         self.driver.back()
 
-    def enter_r_u_f_l_d_b_in_sequence(self):
+    def enter_R_U_F_L_D_B_in_sequence(self):
         text = self.driver.find_element(by=AppiumBy.XPATH, value='//*[@text="Type here"]/parent::*')
         text.click()
         time.sleep(2)
@@ -75,7 +71,7 @@ class TestAppium(unittest.TestCase):
         self.driver.tap([(600, 1630)])
         self.driver.tap([(750, 1630)])
         self.driver.tap([(900, 1630)])
-        self.assertEqual(text.get_attribute('text'), 'r u f l d b ')
+        self.assertEqual(text.get_attribute('text'), 'Rw Uw Fw Lw Dw Bw ')
         self.driver.back()
 
 
